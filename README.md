@@ -1,2 +1,0 @@
-# joinedkury.github.io
-joinedkury
