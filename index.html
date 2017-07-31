@@ -22,7 +22,7 @@
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+      var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.appdata";
 
       var authorizeButton = document.getElementById('authorize-button');
       var signoutButton = document.getElementById('signout-button');
@@ -123,16 +123,34 @@
       }
 	  
 	  function copyTemplate() {
-		var url = 'drive/v2/files/0B6vmdZjvJSM1RmNMU3lUcjlDczQ/copy'
+		var url = 'drive/v2/files/1b2xzUB4eBR6Fpr5Ti7U66Z8t5pvwdhHBNg7ciycuCZY/copy'
 
 		var request = gapi.client.request({
-		'path':url,
+		'path':'drive/v2/files/1b2xzUB4eBR6Fpr5Ti7U66Z8t5pvwdhHBNg7ciycuCZY/copy',
 		'method': 'POST',
 		'body':{
 			'title': 'File FromTemplate'
 			}
-		});
+		}).then(function(response){
+			console.log("copy",response)
+		}, function(response) {
+          appendPre('Error: ' + response.result.error.message);
+        });
+		
+		gapi.client.load('drive', 'v2', function() {
+          var request = gapi.client.drive.files.copy({
+
+			"title": "New Landmax SS from API 5",
+			"fileId": "16votRL4rDtw1woe0yU8_jyVn4NNLwtFkQ7lKhIIJgHc"
+          }).then(function(response){
+			console.log("copy",response)
+			}, function(response) {
+			  appendPre('Error: ' + response.result.error.message);
+			});
+        });
+		
 	  }
+	  
 
     </script>
 
